@@ -24,6 +24,7 @@ requirements:
   build:
     - toolchain
     - python
+    - pkg-config
   run:
     - python
 
