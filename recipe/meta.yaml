@@ -17,13 +17,14 @@ source:
   - define-cl2-prefix-suffix-on-apple.patch
 
 build:
-  number: 0
+  number: 1
   skip: True  # [not (linux and py35)]
 
 requirements:
   build:
     - toolchain
     - python
+    - pkg-config
   run:
     - python
 
