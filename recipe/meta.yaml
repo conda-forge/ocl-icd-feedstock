@@ -13,11 +13,11 @@ source:
   patches:
   # Makes ocl-icd install the OpenCL headers it ships
   - install-headers.patch
-  - install-headers-post-automake.patch
   - define-cl2-prefix-suffix-on-apple.patch
+  - custom-vendordir.patch
 
 build:
-  number: 1
+  number: 2
   skip: True  # [not (linux and py35)]
 
 requirements:
@@ -25,6 +25,9 @@ requirements:
     - toolchain
     - python
     - pkg-config
+    - libtool
+    - automake
+    - autoconf
   run:
     - python
 
