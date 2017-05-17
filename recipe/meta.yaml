@@ -17,19 +17,16 @@ source:
   - custom-vendordir.patch
 
 build:
-  number: 2
-  skip: True  # [not (linux and py35)]
+  number: 3
+  skip: True  # [not linux]
 
 requirements:
   build:
     - toolchain
-    - python
     - pkg-config
     - libtool
     - automake
     - autoconf
-  run:
-    - python
 
 test:
   commands:
