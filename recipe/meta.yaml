@@ -32,6 +32,7 @@ test:
   commands:
     - test -f "${PREFIX}/include/CL/cl.h"     # [unix]
     - test -f "${PREFIX}/lib/libOpenCL.so.1"  # [linux]
+    - test -d "${PREFIX}/etc/OpenCL/vendors"
 
 about:
   home: https://forge.imag.fr/projects/ocl-icd/
