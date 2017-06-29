@@ -2,7 +2,9 @@ set -e
 
 export OCL_ICD_VENDORDIR="${PREFIX}/etc/OpenCL/vendors"
 
+# Make sure `conda-build` keeps this directory.
 mkdir -p "${OCL_ICD_VENDORDIR}"
+touch "${OCL_ICD_VENDORDIR}/.conda_keep"
 
 ./bootstrap
 
