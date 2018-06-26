@@ -22,11 +22,12 @@ build:
 
 requirements:
   build:
-    - toolchain
     - pkg-config
     - libtool
     - automake
     - autoconf
+    - {{ compiler('c') }}
+  host:
 
 test:
   commands:
