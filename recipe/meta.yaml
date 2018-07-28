@@ -13,7 +13,6 @@ source:
   patches:
   # Makes ocl-icd install the OpenCL headers it ships
   - install-headers.patch
-  - define-cl2-prefix-suffix-on-apple.patch
   - custom-vendordir.patch
 
 build:
