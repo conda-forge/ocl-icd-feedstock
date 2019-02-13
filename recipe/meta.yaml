@@ -13,9 +13,11 @@ source:
   patches:
   # Makes ocl-icd install the OpenCL headers it ships
   - install-headers.patch
+  # Recursively check for icds in vendor dir
+  - check_icds_recursively.diff
 
 build:
-  number: 1002
+  number: 1003
   skip: True  # [not linux]
 
 requirements:
@@ -43,3 +45,4 @@ about:
 extra:
   recipe-maintainers:
     - inducer
+    - isuruf
