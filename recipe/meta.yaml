@@ -19,6 +19,8 @@ source:
 build:
   number: 1004
   skip: True  # [not linux]
+  run_exports:
+    - pin_subpackage("ocl-icd")
 
 requirements:
   build:
