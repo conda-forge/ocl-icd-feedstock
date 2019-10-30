@@ -28,6 +28,7 @@ requirements:
     - libtool
     - automake
     - autoconf
+    - make
     - {{ compiler('c') }}
   host:
 
