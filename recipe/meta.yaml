@@ -1,15 +1,18 @@
 {% set name = "ocl-icd" %}
-{% set version = "2.2.12" %}
-{% set sha256 = "17500e5788304eef5b52dbe784cec197bdae64e05eecf38317840d2d05484272" %}
+{% set version = "2.99-97e3f" %}
+# {% set sha256 = "17500e5788304eef5b52dbe784cec197bdae64e05eecf38317840d2d05484272" %}
 
 package:
   name: {{ name|lower }}
   version: {{ version }}
 
 source:
-  fn: {{ name }}-{{ version }}.tar.gz
-  url: https://github.com/OCL-dev/{{ name }}/archive/v{{ version }}.tar.gz
-  sha256: {{ sha256 }}
+  #fn: {{ name }}-{{ version }}.tar.gz
+  #url: https://github.com/OCL-dev/{{ name }}/archive/v{{ version }}.tar.gz
+  #sha256: {{ sha256 }}
+  git_url: https://github.com/OCL-dev/{{ name }}.git
+  git_rev: 97e3fb5d4b005f931f224d9f7903f95ed66ec642
+
   patches:
   # Makes ocl-icd install the OpenCL headers it ships
   - install-headers.patch
