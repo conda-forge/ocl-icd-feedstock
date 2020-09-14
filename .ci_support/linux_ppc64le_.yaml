@@ -5,6 +5,8 @@ c_compiler_version:
 channel_sources:
 - conda-forge,defaults
 channel_targets:
-- conda-forge main
+- conda-forge ocl-icd-dev
 docker_image:
 - condaforge/linux-anvil-ppc64le
+target_platform:
+- linux-ppc64le
