@@ -1,5 +1,5 @@
 {% set name = "ocl-icd" %}
-{% set version = "2.99-97e3f" %}
+{% set version = "2.99_97e3f" %}
 # {% set sha256 = "17500e5788304eef5b52dbe784cec197bdae64e05eecf38317840d2d05484272" %}
 
 package:
