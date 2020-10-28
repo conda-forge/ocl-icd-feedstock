@@ -5,11 +5,9 @@ Home: https://github.com/OCL-dev/ocl-icd
 
 Package license: BSD-2-Clause
 
-Feedstock license: BSD-3-Clause
+Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/ocl-icd-feedstock/blob/master/LICENSE.txt)
 
 Summary: An OpenCL ICD Loader under an open-source license
-
-
 
 Current build status
 ====================
