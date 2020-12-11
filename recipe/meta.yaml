@@ -1,6 +1,6 @@
 {% set name = "ocl-icd" %}
-{% set version = "2.2.13" %}
-{% set sha256 = "f85d59f3e8327f15637b91e4ae8df0829e94daeff68c647b2927b8376b1f8d92" %}
+{% set version = "2.2.14" %}
+{% set sha256 = "46df23608605ad548e80b11f4ba0e590cef6397a079d2f19adf707a7c2fbfe1b" %}
 
 package:
   name: {{ name|lower }}
@@ -14,13 +14,13 @@ source:
 
   patches:
   # Makes ocl-icd install the OpenCL headers it ships
-  - install-headers.patch
+    - install-headers.patch
   # Recursively check for icds in vendor dir
-  - check_icds_recursively.diff
+    - check_icds_recursively.diff
 
 build:
-  number: 1006
-  skip: True  # [not linux]
+  number: 0
+  skip: true  # [not linux]
   run_exports:
     - {{ pin_subpackage("ocl-icd") }}
 
@@ -45,7 +45,7 @@ about:
   # https://forge.imag.fr/projects/ocl-icd/ also exists but appears out of date
   license: BSD-2-Clause
   license_file: COPYING
-  summary: 'An OpenCL ICD Loader under an open-source license'
+  summary: An OpenCL ICD Loader under an open-source license
 
 extra:
   recipe-maintainers:
