@@ -32,6 +32,7 @@ requirements:
     - autoconf
     - make
     - {{ compiler('c') }}
+    - ruby
   host:
 
 test:
