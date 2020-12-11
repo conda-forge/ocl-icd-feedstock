@@ -41,24 +41,45 @@ Current build status
         <table>
           <thead><tr><th>Variant</th><th>Status</th></tr></thead>
           <tbody><tr>
-              <td>linux_64</td>
+              <td>linux_64_ruby2.5</td>
               <td>
                 <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=710&branchName=master">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/ocl-icd-feedstock?branchName=master&jobName=linux&configuration=linux_64_" alt="variant">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/ocl-icd-feedstock?branchName=master&jobName=linux&configuration=linux_64_ruby2.5" alt="variant">
                 </a>
               </td>
             </tr><tr>
-              <td>linux_aarch64</td>
+              <td>linux_64_ruby2.6</td>
               <td>
                 <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=710&branchName=master">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/ocl-icd-feedstock?branchName=master&jobName=linux&configuration=linux_aarch64_" alt="variant">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/ocl-icd-feedstock?branchName=master&jobName=linux&configuration=linux_64_ruby2.6" alt="variant">
                 </a>
               </td>
             </tr><tr>
-              <td>linux_ppc64le</td>
+              <td>linux_aarch64_ruby2.5</td>
               <td>
                 <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=710&branchName=master">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/ocl-icd-feedstock?branchName=master&jobName=linux&configuration=linux_ppc64le_" alt="variant">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/ocl-icd-feedstock?branchName=master&jobName=linux&configuration=linux_aarch64_ruby2.5" alt="variant">
+                </a>
+              </td>
+            </tr><tr>
+              <td>linux_aarch64_ruby2.6</td>
+              <td>
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=710&branchName=master">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/ocl-icd-feedstock?branchName=master&jobName=linux&configuration=linux_aarch64_ruby2.6" alt="variant">
+                </a>
+              </td>
+            </tr><tr>
+              <td>linux_ppc64le_ruby2.5</td>
+              <td>
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=710&branchName=master">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/ocl-icd-feedstock?branchName=master&jobName=linux&configuration=linux_ppc64le_ruby2.5" alt="variant">
+                </a>
+              </td>
+            </tr><tr>
+              <td>linux_ppc64le_ruby2.6</td>
+              <td>
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=710&branchName=master">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/ocl-icd-feedstock?branchName=master&jobName=linux&configuration=linux_ppc64le_ruby2.6" alt="variant">
                 </a>
               </td>
             </tr>
