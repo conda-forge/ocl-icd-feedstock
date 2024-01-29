@@ -1,4 +1,6 @@
-set -e
+#!/bin/bash
+
+set -ex
 
 export OCL_ICD_VENDORDIR="${PREFIX}/etc/OpenCL/vendors"
 
