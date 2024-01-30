@@ -1,29 +1,26 @@
 diff --git a/ocl_icd_loader.c b/ocl_icd_loader.c
-index 12e0182..3011c5d 100644
+index 12e0182..10f13d7 100644
 --- a/ocl_icd_loader.c
 +++ b/ocl_icd_loader.c
-@@ -183,26 +183,66 @@ static inline int _string_with_slash(const char* str) {
+@@ -183,26 +183,59 @@ static inline int _string_with_slash(const char* str) {
    return strchr(str, '/') != NULL;
  }
  
-+static inline int _file_is_dir(const char *dir_path, const char *file_path)
-+{
-+  if (strcmp(file_path, ".") == 0 || strcmp(file_path, "..") == 0)
-+    return 0;
-+  char *str;
++static inline int _file_is_dir(const char* dir_path, const char* file_path) {
++  if (strcmp(file_path, ".") == 0 || strcmp(file_path, "..") == 0) return 0;
++  char * str;
 +  unsigned int lib_path_length;
 +  lib_path_length = strlen(dir_path) + strlen(file_path) + 2;
-+  str = malloc(lib_path_length * sizeof(char));
-+  sprintf(str, "%s/%s", dir_path, file_path);
++  str = malloc(lib_path_length*sizeof(char));
++  sprintf(str,"%s/%s", dir_path, file_path);
++
 +  struct stat buf;
 +  int status = stat(str, &buf);
 +  int ret = 0;
-+  if (status != 0 && errno != ENOENT)
-+  {
++
++  if (status != 0 && errno != ENOENT) {
 +    debug(D_WARN, "Cannot stat '%s'. Aborting", str);
-+  }
-+  else if (S_ISDIR(buf.st_mode))
-+  {
++  } else if (S_ISDIR(buf.st_mode)) {
 +    ret = 1;
 +  }
 +  free(str);
@@ -31,24 +28,20 @@ index 12e0182..3011c5d 100644
 +}
  
 -static inline unsigned int _find_num_suffix_match(DIR *dir, const char* suffix) {
-+static inline unsigned int _find_num_suffix_match(DIR *dir, const char *suffix, const char *dir_path)
-+{
++static inline unsigned int _find_num_suffix_match(DIR *dir, const char *suffix, const char * dir_path) {
    unsigned int num_matches = 0;
    struct dirent *ent;
-+  DIR *link_dir = NULL;
-+  char *link_dir_path;
-+
++  DIR * link_dir = NULL;
++  char * link_dir_path;
    while( (ent=readdir(dir)) != NULL ){
      if (_string_end_with(ent->d_name, suffix)) {
        num_matches++;
      }
-+    if (_file_is_dir(dir_path, ent->d_name))
-+    {
-+      link_dir_path = malloc((strlen(dir_path) + strlen(ent->d_name) + 2) * sizeof(char));
-+      sprintf(link_dir_path, "%s/%s", dir_path, ent->d_name);
++    if (dir_path && _file_is_dir(dir_path, ent->d_name)) {
++      link_dir_path =  malloc((strlen(dir_path) + strlen(ent->d_name) + 2)*sizeof(char));
++      sprintf(link_dir_path,"%s/%s", dir_path, ent->d_name);
 +      link_dir = opendir(link_dir_path);
-+      if (link_dir != NULL)
-+      {
++      if (link_dir != NULL) {
 +        num_matches += _find_num_suffix_match(link_dir, suffix, link_dir_path);
 +        closedir(link_dir);
 +      }
@@ -68,22 +61,40 @@ index 12e0182..3011c5d 100644
  
 -static inline unsigned int _find_num_lays(DIR *dir) {
 -  unsigned int num_lays = _find_num_suffix_match(dir, LAY_EXTENSION);
-+static inline unsigned int _find_num_lays(DIR *dir, const char *dir_path)
++static inline unsigned int _find_num_lays(DIR *dir)
 +{
-+  unsigned int num_lays = _find_num_suffix_match(dir, LAY_EXTENSION, dir_path);
++  unsigned int num_lays = _find_num_suffix_match(dir, LAY_EXTENSION, NULL);
    RETURN(num_lays);
  }
  
-@@ -727,7 +767,7 @@ static void __initSystemLayers( void ) {
-     return;
+@@ -277,12 +310,22 @@ static inline unsigned int _open_driver(unsigned int num_icds,
+ static inline unsigned int _open_drivers(DIR *dir, const char* dir_path) {
+   unsigned int num_icds = 0;
+   struct dirent *ent;
++  DIR * link_dir = NULL;
++  char * link_dir_path;
+   while( (ent=readdir(dir)) != NULL ){
+-    if(! _string_end_with_icd(ent->d_name)) {
+-      continue;
++    if(_string_end_with_icd(ent->d_name)) {
++        num_icds = _open_driver(num_icds, dir_path, ent->d_name);
++    }
++    else if (_file_is_dir(dir_path, ent->d_name)) {
++      link_dir_path =  malloc((strlen(dir_path) + strlen(ent->d_name) + 2)*sizeof(char));
++      sprintf(link_dir_path,"%s/%s", dir_path, ent->d_name);
++      link_dir = opendir(link_dir_path);
++      if (link_dir != NULL) {
++        num_icds += _open_drivers(link_dir, link_dir_path);
++        closedir(link_dir);
++      }
++      free(link_dir_path);
+     }
+-    num_icds = _open_driver(num_icds, dir_path, ent->d_name);
+-
    }
- 
--  num_lays = _find_num_lays(dir);
-+  num_lays = _find_num_lays(dir, opencl_layer_path);
-   if(num_lays == 0) {
-     return;
-   }
-@@ -857,7 +897,7 @@ static void __initClIcd( void ) {
+   RETURN(num_icds);
+ }
+@@ -857,7 +900,7 @@ static void __initClIcd( void ) {
        goto abort;
      }
  
