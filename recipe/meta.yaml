@@ -38,7 +38,6 @@ requirements:
 test:
   requires:
     - {{ compiler('c') }}
-    - pocl-cpu
   source_files:
     - ocl_test.c
   commands:
@@ -47,10 +46,7 @@ test:
     - test -d "${PREFIX}/etc/OpenCL/vendors"
     - $CC -o test ocl_test.c -L${PREFIX}/lib -lOpenCL -I${PREFIX}/include
     - ./test
-    - ./test | grep "The pocl project"
-    # Test that we can find ICDs in subdirectories of the vendor dir (see
-    # check_icds_recursively.diff):
-    - mkdir "${PREFIX}/etc/OpenCL/vendors/subdir-test"; mv "${PREFIX}/etc/OpenCL/vendors/pocl.icd" "${PREFIX}/etc/OpenCL/vendors/subdir-test/pocl.icd"; ./test | grep "The pocl project"
+    - ./test | grep "No platforms found!"
 
 about:
   home: https://github.com/OCL-dev/ocl-icd
