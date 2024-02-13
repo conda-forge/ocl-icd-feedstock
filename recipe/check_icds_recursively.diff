@@ -1,12 +1,11 @@
 diff --git a/ocl_icd_loader.c b/ocl_icd_loader.c
-index 225e61d..954381a 100644
+index 12e0182..10f13d7 100644
 --- a/ocl_icd_loader.c
 +++ b/ocl_icd_loader.c
-@@ -165,13 +165,46 @@ static inline int _string_with_slash(const char* str) {
+@@ -183,26 +183,59 @@ static inline int _string_with_slash(const char* str) {
    return strchr(str, '/') != NULL;
  }
  
--static inline unsigned int _find_num_icds(DIR *dir) {
 +static inline int _file_is_dir(const char* dir_path, const char* file_path) {
 +  if (strcmp(file_path, ".") == 0 || strcmp(file_path, "..") == 0) return 0;
 +  char * str;
@@ -27,30 +26,48 @@ index 225e61d..954381a 100644
 +  free(str);
 +  return ret;
 +}
-+
-+static inline unsigned int _find_num_icds(DIR *dir, const char * dir_path) {
-   unsigned int num_icds = 0;
+ 
+-static inline unsigned int _find_num_suffix_match(DIR *dir, const char* suffix) {
++static inline unsigned int _find_num_suffix_match(DIR *dir, const char *suffix, const char * dir_path) {
+   unsigned int num_matches = 0;
    struct dirent *ent;
 +  DIR * link_dir = NULL;
 +  char * link_dir_path;
    while( (ent=readdir(dir)) != NULL ){
-     if (_string_end_with_icd(ent->d_name)) {
-       num_icds++;
+     if (_string_end_with(ent->d_name, suffix)) {
+       num_matches++;
      }
-+    if (_file_is_dir(dir_path, ent->d_name)) {
++    if (dir_path && _file_is_dir(dir_path, ent->d_name)) {
 +      link_dir_path =  malloc((strlen(dir_path) + strlen(ent->d_name) + 2)*sizeof(char));
 +      sprintf(link_dir_path,"%s/%s", dir_path, ent->d_name);
 +      link_dir = opendir(link_dir_path);
 +      if (link_dir != NULL) {
-+        num_icds += _find_num_icds(link_dir, link_dir_path);
++        num_matches += _find_num_suffix_match(link_dir, suffix, link_dir_path);
 +        closedir(link_dir);
 +      }
 +      free(link_dir_path);
 +    }
    }
    rewinddir(dir);
+   return num_matches;
+ }
+ 
+-static inline unsigned int _find_num_icds(DIR *dir) {
+-  unsigned int num_icds = _find_num_suffix_match(dir, ICD_EXTENSION);
++static inline unsigned int _find_num_icds(DIR *dir, const char *dir_path) {
++  unsigned int num_icds = _find_num_suffix_match(dir, ICD_EXTENSION, dir_path);
    RETURN(num_icds);
-@@ -243,12 +276,22 @@ static inline unsigned int _open_driver(unsigned int num_icds,
+ }
+ 
+-static inline unsigned int _find_num_lays(DIR *dir) {
+-  unsigned int num_lays = _find_num_suffix_match(dir, LAY_EXTENSION);
++static inline unsigned int _find_num_lays(DIR *dir)
++{
++  unsigned int num_lays = _find_num_suffix_match(dir, LAY_EXTENSION, NULL);
+   RETURN(num_lays);
+ }
+ 
+@@ -277,12 +310,22 @@ static inline unsigned int _open_driver(unsigned int num_icds,
  static inline unsigned int _open_drivers(DIR *dir, const char* dir_path) {
    unsigned int num_icds = 0;
    struct dirent *ent;
@@ -77,7 +94,7 @@ index 225e61d..954381a 100644
    }
    RETURN(num_icds);
  }
-@@ -619,7 +662,7 @@ static void __initClIcd( void ) {
+@@ -857,7 +900,7 @@ static void __initClIcd( void ) {
        goto abort;
      }
  

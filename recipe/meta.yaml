@@ -1,6 +1,6 @@
 {% set name = "ocl-icd" %}
-{% set version = "2.3.1" %}
-{% set sha256 = "a32b67c2d52ffbaf490be9fc18b46428ab807ab11eff7664d7ff75e06cfafd6d" %}
+{% set version = "2.3.2" %}
+{% set sha256 = "ec47d7dcd961ea06695b067e8b7edb82e420ddce03e0081a908c62fd0b8535c5" %}
 
 package:
   name: {{ name|lower }}
@@ -36,10 +36,17 @@ requirements:
   host:
 
 test:
+  requires:
+    - {{ compiler('c') }}
+  source_files:
+    - ocl_test.c
   commands:
-    - test -f "${PREFIX}/include/CL/cl.h"     # [unix]
-    - test -f "${PREFIX}/lib/libOpenCL.so.1"  # [linux]
+    - test -f "${PREFIX}/include/CL/cl.h"
+    - test -f "${PREFIX}/lib/libOpenCL.so.1"
     - test -d "${PREFIX}/etc/OpenCL/vendors"
+    - $CC -o test ocl_test.c -L${PREFIX}/lib -lOpenCL -I${PREFIX}/include
+    - ./test
+    - ./test | grep "No platforms found!"
 
 about:
   home: https://github.com/OCL-dev/ocl-icd
@@ -52,3 +59,4 @@ extra:
   recipe-maintainers:
     - inducer
     - isuruf
+    - matthiasdiener
