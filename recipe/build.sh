@@ -16,7 +16,9 @@ touch "${OCL_ICD_VENDORDIR}/.conda_keep"
   --enable-custom-vendordir="${OCL_ICD_VENDORDIR}" || (cat config.log; false)
 
 make -j${CPU_COUNT}
+if [[ "${CONDA_BUILD_CROSS_COMPILATION:-}" != "1" || "${CROSSCOMPILING_EMULATOR}" != "" ]]; then
 make check
+fi
 make install
 
 
