@@ -19,7 +19,7 @@ source:
     - check_icds_recursively.diff
 
 build:
-  number: 0
+  number: 1
   skip: true  # [not linux]
   run_exports:
     - {{ pin_subpackage("ocl-icd") }}
