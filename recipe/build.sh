@@ -18,7 +18,3 @@ touch "${OCL_ICD_VENDORDIR}/.conda_keep"
 make -j${CPU_COUNT}
 make check
 make install
-
-
-mkdir -p "${PREFIX}/etc/conda/activate.d/"
-cp "${RECIPE_DIR}/activate.sh" "${PREFIX}/etc/conda/activate.d/${PKG_NAME}_activate.sh"
