@@ -13,14 +13,7 @@ Current build status
 ====================
 
 
-<table><tr>
-    <td>Travis</td>
-    <td>
-      <a href="https://app.travis-ci.com/conda-forge/ocl-icd-feedstock">
-        <img alt="linux" src="https://img.shields.io/travis/com/conda-forge/ocl-icd-feedstock/main.svg?label=Linux">
-      </a>
-    </td>
-  </tr>
+<table>
     
   <tr>
     <td>Azure</td>
@@ -67,6 +60,7 @@ Current release info
 
 | Name | Downloads | Version | Platforms |
 | --- | --- | --- | --- |
+| [![Conda Recipe](https://img.shields.io/badge/recipe-libopencl--devel-green.svg)](https://anaconda.org/conda-forge/libopencl-devel) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/libopencl-devel.svg)](https://anaconda.org/conda-forge/libopencl-devel) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/libopencl-devel.svg)](https://anaconda.org/conda-forge/libopencl-devel) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/libopencl-devel.svg)](https://anaconda.org/conda-forge/libopencl-devel) |
 | [![Conda Recipe](https://img.shields.io/badge/recipe-ocl--icd-green.svg)](https://anaconda.org/conda-forge/ocl-icd) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/ocl-icd.svg)](https://anaconda.org/conda-forge/ocl-icd) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/ocl-icd.svg)](https://anaconda.org/conda-forge/ocl-icd) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/ocl-icd.svg)](https://anaconda.org/conda-forge/ocl-icd) |
 
 Installing ocl-icd
@@ -79,41 +73,41 @@ conda config --add channels conda-forge
 conda config --set channel_priority strict
 ```
 
-Once the `conda-forge` channel has been enabled, `ocl-icd` can be installed with `conda`:
+Once the `conda-forge` channel has been enabled, `libopencl-devel, ocl-icd` can be installed with `conda`:
 
 ```
-conda install ocl-icd
-```
-
-or with `mamba`:
-
-```
-mamba install ocl-icd
-```
-
-It is possible to list all of the versions of `ocl-icd` available on your platform with `conda`:
-
-```
-conda search ocl-icd --channel conda-forge
+conda install libopencl-devel ocl-icd
 ```
 
 or with `mamba`:
 
 ```
-mamba search ocl-icd --channel conda-forge
+mamba install libopencl-devel ocl-icd
+```
+
+It is possible to list all of the versions of `libopencl-devel` available on your platform with `conda`:
+
+```
+conda search libopencl-devel --channel conda-forge
+```
+
+or with `mamba`:
+
+```
+mamba search libopencl-devel --channel conda-forge
 ```
 
 Alternatively, `mamba repoquery` may provide more information:
 
 ```
 # Search all versions available on your platform:
-mamba repoquery search ocl-icd --channel conda-forge
+mamba repoquery search libopencl-devel --channel conda-forge
 
-# List packages depending on `ocl-icd`:
-mamba repoquery whoneeds ocl-icd --channel conda-forge
+# List packages depending on `libopencl-devel`:
+mamba repoquery whoneeds libopencl-devel --channel conda-forge
 
-# List dependencies of `ocl-icd`:
-mamba repoquery depends ocl-icd --channel conda-forge
+# List dependencies of `libopencl-devel`:
+mamba repoquery depends libopencl-devel --channel conda-forge
 ```
 
 
