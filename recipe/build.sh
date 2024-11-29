@@ -12,7 +12,7 @@ touch "${OCL_ICD_VENDORDIR}/.conda_keep"
 
 ./configure \
   --prefix=$PREFIX \
-  --enable-official-khronos-headers \
+  --disable-official-khronos-headers \
   --enable-custom-vendordir="${OCL_ICD_VENDORDIR}" || (cat config.log; false)
 
 make -j${CPU_COUNT}

@@ -3,7 +3,7 @@
 {% set sha256 = "ec47d7dcd961ea06695b067e8b7edb82e420ddce03e0081a908c62fd0b8535c5" %}
 
 package:
-  name: {{ name|lower }}
+  name: ocl-icd
   version: {{ version }}
 
 source:
@@ -13,13 +13,11 @@ source:
   #git_rev: 97e3fb5d4b005f931f224d9f7903f95ed66ec642
 
   patches:
-  # Makes ocl-icd install the OpenCL headers it ships
-    - install-headers.patch
   # Recursively check for icds in vendor dir
     - check_icds_recursively.diff
 
 build:
-  number: 1
+  number: 2
   skip: true  # [not linux]
   run_exports:
     - {{ pin_subpackage("ocl-icd") }}
@@ -32,12 +30,18 @@ requirements:
     - autoconf
     - make
     - {{ compiler('c') }}
+    - {{ stdlib('c') }}
     - ruby *
   host:
+    - opencl-headers
+  run:
+    - {{ pin_compatible("opencl-headers", max_pin=None) }}
 
 test:
   requires:
     - {{ compiler('c') }}
+    - {{ stdlib('c') }}
+    - pkg-config
   source_files:
     - ocl_test.c
   commands:
@@ -47,6 +51,19 @@ test:
     - $CC -o test ocl_test.c -L${PREFIX}/lib -lOpenCL -I${PREFIX}/include
     - ./test
     - ./test | grep "No platforms found!"
+    - pkg-config OpenCL --libs --cflags
+
+outputs:
+  - name: ocl-icd
+
+  - name: libopencl-devel
+    version: 3.0.{{ version }}
+    build:
+      run_exports:
+        - {{ pin_subpackage("ocl-icd") }}
+    requirements:
+      run:
+        - ocl-icd
 
 about:
   home: https://github.com/OCL-dev/ocl-icd
