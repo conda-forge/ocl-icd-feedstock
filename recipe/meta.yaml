@@ -1,6 +1,6 @@
 {% set name = "ocl-icd" %}
-{% set version = "2.3.2" %}
-{% set sha256 = "ec47d7dcd961ea06695b067e8b7edb82e420ddce03e0081a908c62fd0b8535c5" %}
+{% set version = "2.3.3" %}
+{% set sha256 = "8cd8e8e129db3081a64090fc1252bec39dc88cdb7b3f929315e014b75069bd9d" %}
 
 package:
   name: ocl-icd
@@ -17,7 +17,7 @@ source:
     - check_icds_recursively.diff
 
 build:
-  number: 2
+  number: 0
   skip: true  # [not linux]
   run_exports:
     - {{ pin_subpackage("ocl-icd") }}
