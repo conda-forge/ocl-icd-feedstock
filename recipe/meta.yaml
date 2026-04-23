@@ -1,6 +1,6 @@
 {% set name = "ocl-icd" %}
-{% set version = "2.3.3" %}
-{% set sha256 = "8cd8e8e129db3081a64090fc1252bec39dc88cdb7b3f929315e014b75069bd9d" %}
+{% set version = "2.3.4" %}
+{% set sha256 = "1a302b71b7304cca5a36f69d017b1af2b762cc4c2dd1c0c0e2fc1933db25c9cc" %}
 
 package:
   name: ocl-icd
