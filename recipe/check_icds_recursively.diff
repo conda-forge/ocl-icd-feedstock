@@ -1,8 +1,6 @@
-diff --git a/ocl_icd_loader.c b/ocl_icd_loader.c
-index 12e0182..10f13d7 100644
 --- a/ocl_icd_loader.c
 +++ b/ocl_icd_loader.c
-@@ -183,26 +183,59 @@ static inline int _string_with_slash(const char* str) {
+@@ -183,26 +183,59 @@
    return strchr(str, '/') != NULL;
  }
  
@@ -67,9 +65,13 @@ index 12e0182..10f13d7 100644
    RETURN(num_lays);
  }
  
-@@ -277,12 +310,22 @@ static inline unsigned int _open_driver(unsigned int num_icds,
- static inline unsigned int _open_drivers(DIR *dir, const char* dir_path) {
-   unsigned int num_icds = 0;
+@@ -274,15 +307,24 @@
+   RETURN(num_icds);
+ }
+ 
+-static inline unsigned int _open_drivers(DIR *dir, const char* dir_path) {
+-  unsigned int num_icds = 0;
++static inline unsigned int _open_drivers(DIR *dir, const char* dir_path, unsigned int num_icds) {
    struct dirent *ent;
 +  DIR * link_dir = NULL;
 +  char * link_dir_path;
@@ -84,7 +86,7 @@ index 12e0182..10f13d7 100644
 +      sprintf(link_dir_path,"%s/%s", dir_path, ent->d_name);
 +      link_dir = opendir(link_dir_path);
 +      if (link_dir != NULL) {
-+        num_icds += _open_drivers(link_dir, link_dir_path);
++        num_icds = _open_drivers(link_dir, link_dir_path, num_icds);
 +        closedir(link_dir);
 +      }
 +      free(link_dir_path);
@@ -94,7 +96,7 @@ index 12e0182..10f13d7 100644
    }
    RETURN(num_icds);
  }
-@@ -857,7 +900,7 @@ static void __initClIcd( void ) {
+@@ -889,7 +931,7 @@
        goto abort;
      }
  
@@ -103,3 +105,12 @@ index 12e0182..10f13d7 100644
      if(num_icds == 0) {
        goto abort;
      }
+@@ -913,7 +955,7 @@
+       num_icds = _load_icd(0, dir_path);
+     }
+   } else {
+-    num_icds = _open_drivers(dir, dir_path);
++    num_icds = _open_drivers(dir, dir_path, 0);
+   }
+   if(num_icds == 0) {
+     goto abort;
